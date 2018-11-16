@@ -1,0 +1,11 @@
+c:\users\царь александр\source\repos\nDeathProject\nDeathProject\bin\Debug\netcoreapp2.0\nDeathProject.deps.json
+c:\users\царь александр\source\repos\nDeathProject\nDeathProject\bin\Debug\netcoreapp2.0\nDeathProject.runtimeconfig.json
+c:\users\царь александр\source\repos\nDeathProject\nDeathProject\bin\Debug\netcoreapp2.0\nDeathProject.runtimeconfig.dev.json
+c:\users\царь александр\source\repos\nDeathProject\nDeathProject\bin\Debug\netcoreapp2.0\nDeathProject.dll
+c:\users\царь александр\source\repos\nDeathProject\nDeathProject\bin\Debug\netcoreapp2.0\nDeathProject.pdb
+c:\users\царь александр\source\repos\nDeathProject\nDeathProject\obj\Debug\netcoreapp2.0\nDeathProject.csprojAssemblyReference.cache
+c:\users\царь александр\source\repos\nDeathProject\nDeathProject\obj\Debug\netcoreapp2.0\nDeathProject.csproj.CoreCompileInputs.cache
+c:\users\царь александр\source\repos\nDeathProject\nDeathProject\obj\Debug\netcoreapp2.0\nDeathProject.AssemblyInfoInputs.cache
+c:\users\царь александр\source\repos\nDeathProject\nDeathProject\obj\Debug\netcoreapp2.0\nDeathProject.AssemblyInfo.cs
+c:\users\царь александр\source\repos\nDeathProject\nDeathProject\obj\Debug\netcoreapp2.0\nDeathProject.dll
+c:\users\царь александр\source\repos\nDeathProject\nDeathProject\obj\Debug\netcoreapp2.0\nDeathProject.pdb
