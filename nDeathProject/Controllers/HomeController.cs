@@ -19,11 +19,15 @@ namespace nDeathProject.Controllers
         private void setError(string key, string message)
         {
             ModelState.AddModelError(key, message);
-            ViewData["Error"] += $"{message}\n";
+            ViewData["Error"] += $"{message}<br>";
         }
         public JsonResult GetDataPoints([Bind("ACoeff,BCoeff,CCoeff,Step,LowerBorder,UpperBorder")]ChartEntity chart)
         {
-            if (chart.LowerBorder > chart.UpperBorder)
+            if ((chart.ACoeff & chart.BCoeff & chart.CCoeff) == 0)
+            {
+                setError("Coef", "All fields arerequired");
+            }
+            if (chart.LowerBorder >= chart.UpperBorder)
             {
                 setError("LowerBorder", "LowerBorder must be less than upper one");
             }
@@ -40,10 +44,10 @@ namespace nDeathProject.Controllers
                     yValue = chart.ACoeff * (i * i) + chart.BCoeff * i + chart.CCoeff;
                     values.Add(new Point(i, yValue));
                 }
-                return Json(new SelectList(values, "X", "Y"));
+                return Json(new { List = values, View = PartialView("_FunctionPartial") });
             }
-            ViewData["Error"] = "Errorrr";
-            throw new Exception("Invalid input");
+
+            return Json(new { View = PartialView("_FunctionPartial") });
             
             
         }
