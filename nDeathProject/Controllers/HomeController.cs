@@ -16,11 +16,20 @@ namespace nDeathProject.Controllers
             return View();
         }
 
+        private void setError(string key, string message)
+        {
+            ModelState.AddModelError(key, message);
+            ViewData["Error"] += $"{message}\n";
+        }
         public JsonResult GetDataPoints([Bind("ACoeff,BCoeff,CCoeff,Step,LowerBorder,UpperBorder")]ChartEntity chart)
         {
             if (chart.LowerBorder > chart.UpperBorder)
             {
-                ModelState.AddModelError("Error", "Border Error");
+                setError("LowerBorder", "LowerBorder must be less than upper one");
+            }
+            if (chart.Step <= 0)
+            {
+                setError("Step", "Step must be grower than Zero");
             }
             if (ModelState.IsValid)
             {
@@ -33,7 +42,8 @@ namespace nDeathProject.Controllers
                 }
                 return Json(new SelectList(values, "X", "Y"));
             }
-            return Json(new object());
+            ViewData["Error"] = "Errorrr";
+            throw new Exception("Invalid input");
             
             
         }

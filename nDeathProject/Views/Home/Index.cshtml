@@ -3,51 +3,66 @@
 @{ 
     Layout = null;
 }
-<div id="chartContainer" style="height: 300px; width:80%" ></div>
+<div style="display:flex">
+<div id="chartContainer" style="height: 300px; width:70%" ></div>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4" name="functionBlock">
         <form asp-action="Index" id="chartFunc">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ACoeff" class="control-label"></label>
-                <input asp-for="ACoeff" class="form-control" />
-                <span asp-validation-for="ACoeff" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BCoeff" class="control-label"></label>
-                <input asp-for="BCoeff" class="form-control" />
-                <span asp-validation-for="BCoeff" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CCoeff" class="control-label"></label>
-                <input asp-for="CCoeff" class="form-control" />
-                <span asp-validation-for="CCoeff" class="text-danger"></span>
+            <div style="display:flex">
+                Function :
+                <div class="form-group">
+                    y =
+                    @*<label asp-for="ACoeff" class="control-label"></label>*@
+                    <input asp-for="ACoeff" class="form-control" style="width:60px"/>
+                    @*<span asp-validation-for="ACoeff" class="text-danger"></span>*@
+                </div>
+                
+                <div class="form-group">
+                    x^2 +
+                    @*<label asp-for="BCoeff" class="control-label"></label>*@
+                    <input asp-for="BCoeff" class="form-control" style="width:60px" />
+                    @*<span asp-validation-for="BCoeff" class="text-danger"></span>*@
+                </div>
+                
+                <div class="form-group">
+                    x +
+                    @*<label asp-for="CCoeff" class="control-label"></label>*@
+                    <input asp-for="CCoeff" class="form-control" style="width:70px" />
+                    @*<span asp-validation-for="CCoeff" class="text-danger"></span>*@
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="Step" class="control-label"></label>
-                <input asp-for="Step" class="form-control" />
-                <span asp-validation-for="Step" class="text-danger"></span>
+                <input asp-for="Step" class="form-control" style="width:60px"/>
+                @*<span asp-validation-for="Step" class="text-danger"></span>*@
+            </div>
+            <div style="display:flex">
+            <div class="form-group">
+                From
+                @*<label asp-for="LowerBorder" class="control-label"></label>*@
+                <input asp-for="LowerBorder" class="form-control"  style="width:60px"/>
+                @*<span asp-validation-for="LowerBorder" class="text-danger"></span>*@
             </div>
             <div class="form-group">
-                <label asp-for="LowerBorder" class="control-label"></label>
-                <input asp-for="LowerBorder" class="form-control" />
-                <span asp-validation-for="LowerBorder" class="text-danger"></span>
+                to
+                @*<label asp-for="UpperBorder" class="control-label"></label>*@
+                <input asp-for="UpperBorder" class="form-control" style="width:60px" />
+                @*<span asp-validation-for="UpperBorder" class="text-danger"></span>*@
             </div>
+                </div>
             <div class="form-group">
-                <label asp-for="UpperBorder" class="control-label"></label>
-                <input asp-for="UpperBorder" class="form-control" />
-                <span asp-validation-for="UpperBorder" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="PLOT" class="btn btn-default" />
             </div>
         </form>
+        <div id="errors">
+            <h1>ERRORS</h1>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
+
+
 <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 <script>
@@ -74,7 +89,7 @@
 <script>
     $("#chartFunc").on("submit", function (e) {
         e.preventDefault();
-        $("#chartContainer").empty();
+        
         $this = $(this);
         var frmValues = $this.serialize();
         $.ajax({
@@ -87,27 +102,21 @@
                 $.each(res, function (i, point) {
                     points.push({ x: parseInt(point.value), y: parseInt(point.text) });
                 });
-                var options = {
-                    animationEnabled: true,
-                    title: {
-                        text: "Chart"
-                    },
-                    axisX: {
-                        title: "X",
-                    },
-                    axisY: {
-                        title: "Y",
-                        includeZero: true
-                    },
-                    data:
-                        [{
-                            yValueFormatString: "##",
-                            xValueFormatString: "##",
-                            type: "spline",
-                            dataPoints: points
-                        }]
-                }
+                options.data =
+                    [{
+                        yValueFormatString: "##",
+                        xValueFormatString: "##",
+                        type: "spline",
+                        dataPoints: points
+                    }];
+                
                 $("#chartContainer").CanvasJSChart(options);
+                return false;
+            },
+            error: function (ex) { 
+                $('#errors').empty();
+                $("#errors").append("<h2>Input Error<h2>").append("<h3>@ViewData["Error"]<h3>");
+                return false;
             }
         });
     })
