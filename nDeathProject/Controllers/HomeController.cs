@@ -23,10 +23,6 @@ namespace nDeathProject.Controllers
         }
         public JsonResult GetDataPoints([Bind("ACoeff,BCoeff,CCoeff,Step,LowerBorder,UpperBorder")]ChartEntity chart)
         {
-            if ((chart.ACoeff & chart.BCoeff & chart.CCoeff) == 0)
-            {
-                setError("Coef", "All fields arerequired");
-            }
             if (chart.LowerBorder >= chart.UpperBorder)
             {
                 setError("LowerBorder", "LowerBorder must be less than upper one");

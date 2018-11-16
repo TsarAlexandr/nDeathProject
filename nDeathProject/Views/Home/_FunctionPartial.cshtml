@@ -2,27 +2,27 @@
 
 <form asp-action="Index" id="chartFunc">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <div style="display:flex">
+    <div class="inRowEditors">
         Function :y =
-        <input asp-for="ACoeff" class="form-control" style="width:60px" />
+        <input asp-for="ACoeff" />
         x^2 +
-        <input asp-for="BCoeff" class="form-control" style="width:60px" />
+        <input asp-for="BCoeff" />
         x +
-        <input asp-for="CCoeff" class="form-control" style="width:70px" />
+        <input asp-for="CCoeff" />
 
     </div>
 
-    <label asp-for="Step" class="control-label"></label>
-    <input asp-for="Step" class="form-control" style="width:60px" />
+    <label asp-for="Step"></label>
+    <input asp-for="Step" />
 
-    <div style="display:flex">
+    <div class="inRowEditors">
         From
-        <input asp-for="LowerBorder" class="form-control" style="width:60px" />
+        <input asp-for="LowerBorder"  />
         to
-        <input asp-for="UpperBorder" class="form-control" style="width:60px" />
+        <input asp-for="UpperBorder"  />
     </div>
     <div class="form-group">
-        <input type="submit" value="PLOT" class="btn btn-default" />
+        <input type="submit" value="PLOT" class="btn-primary" />
     </div>
 </form>
 

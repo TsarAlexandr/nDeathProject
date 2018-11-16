@@ -1,14 +1,16 @@
 ﻿
-
 @{ 
     Layout = null;
 }
-<div style="display:flex">
-    <div id="chartContainer" style="height: 300px; width:70%"></div>
+<head>
+    <link href="~/css/style.css" rel="stylesheet" />
+</head>
+<div class="inRowEditors">
+    <div id="chartContainer" class="chartContainer"></div>
 
-    <div id="formContainer">
+    <div id="formContainer" class="formContainer">
         @Html.Partial("_FunctionPartial")
-        <div id="errors"> </div>
+        <div id="errors" class="error"> </div>
     </div>
     
 
