@@ -5,6 +5,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 using nDeathProject.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace nDeathProject.Controllers
 {
@@ -23,14 +24,14 @@ namespace nDeathProject.Controllers
             }
             if (ModelState.IsValid)
             {
-                Dictionary<int, int> values = new Dictionary<int, int>();
+                List<Point> values = new List<Point>();
                 int yValue = 0;
-                for (int i = chart.LowerBorder; i < chart.UpperBorder; ++i)
+                for (int i = chart.LowerBorder; i < chart.UpperBorder; i += chart.Step)
                 {
                     yValue = chart.ACoeff * (i * i) + chart.BCoeff * i + chart.CCoeff;
-                    values.Add(i, yValue);
+                    values.Add(new Point(i, yValue));
                 }
-                return Json(values);
+                return Json(new SelectList(values, "X", "Y"));
             }
             return Json(new object());
             

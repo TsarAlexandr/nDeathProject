@@ -1,16 +1,12 @@
 ﻿@model nDeathProject.Models.ChartEntity
 
-@{
-    ViewData["Title"] = "Index";
+@{ 
+    Layout = null;
 }
-
-<h2>Index</h2>
-
-<h4>ChartEntity</h4>
-<hr />
+<div id="chartContainer" style="height: 300px; width:80%" ></div>
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Index">
+        <form asp-action="Index" id="chartFunc">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="ACoeff" class="control-label"></label>
@@ -52,6 +48,70 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+<script>
+    var options = {
+        animationEnabled: true,
+        title: {
+            text: "Chart"
+        },
+        axisX: {
+            title: "X",
+        },
+        axisY: {
+            title: "Y",
+            includeZero: true
+        },
+        data: [{}]
+    };
+</script>
+<script>
+    window.onload = function () {
+        $("#chartContainer").CanvasJSChart(options);
+    }
+</script>
+<script>
+    $("#chartFunc").on("submit", function (e) {
+        e.preventDefault();
+        $("#chartContainer").empty();
+        $this = $(this);
+        var frmValues = $this.serialize();
+        $.ajax({
+            url: '@Url.Action("GetDataPoints")',
+            dataType: 'json',
+            data: frmValues,
+            type: 'GET',
+            success: function (res) {
+                var points = [];
+                $.each(res, function (i, point) {
+                    points.push({ x: parseInt(point.value), y: parseInt(point.text) });
+                });
+                var options = {
+                    animationEnabled: true,
+                    title: {
+                        text: "Chart"
+                    },
+                    axisX: {
+                        title: "X",
+                    },
+                    axisY: {
+                        title: "Y",
+                        includeZero: true
+                    },
+                    data:
+                        [{
+                            yValueFormatString: "##",
+                            xValueFormatString: "##",
+                            type: "spline",
+                            dataPoints: points
+                        }]
+                }
+                $("#chartContainer").CanvasJSChart(options);
+            }
+        });
+    })
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
