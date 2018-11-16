@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Microsoft.AspNetCore.Mvc;
 using nDeathProject.Models;
 
@@ -15,18 +15,26 @@ namespace nDeathProject.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public JsonResult GetDataPoints([Bind("ACoeff,BCoeff,CCoeff,Step,LowerBorder,UpperBorder")]ChartEntity chart)
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
+            if (chart.LowerBorder > chart.UpperBorder)
+            {
+                ModelState.AddModelError("Error", "Border Error");
+            }
+            if (ModelState.IsValid)
+            {
+                Dictionary<int, int> values = new Dictionary<int, int>();
+                int yValue = 0;
+                for (int i = chart.LowerBorder; i < chart.UpperBorder; ++i)
+                {
+                    yValue = chart.ACoeff * (i * i) + chart.BCoeff * i + chart.CCoeff;
+                    values.Add(i, yValue);
+                }
+                return Json(values);
+            }
+            return Json(new object());
+            
+            
         }
 
         public IActionResult Error()
